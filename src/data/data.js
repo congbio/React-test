@@ -1,4 +1,5 @@
-const DATA = [
+export const data1 = []
+export const DATA = [
     {
       id:1,
       number:114,
@@ -175,4 +176,3 @@ const DATA = [
       },
     },
   ];
-export default DATA;

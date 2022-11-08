@@ -40,10 +40,10 @@ export default function BottomBar() {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Link')}>
+      <TouchableOpacity onPress={() => navigation.navigate('map')}>
         <View style={styles.itemBottomBar}>
-          <AntDesign name="link" size={24} color="black" />
-          <Text>Link</Text>
+          <FontAwesome5 name="map" size={24} color="black" />
+          <Text>Map</Text>
         </View>
       </TouchableOpacity>
 

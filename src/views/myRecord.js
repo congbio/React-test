@@ -22,13 +22,9 @@ import DATA from "../data/data";
 export default function MyRecord() {
   const [displayAdd, setDisplayAdd] = useState(false);
   const navigation = useNavigation();
-
-
-
-
+ 
   const[getData, setData]=useState(DATA);
-
-
+ 
   const [getNumber, setNumber]= useState('');
   const [getName, setName]= useState('');
   const [getType, setType]= useState('');
@@ -91,13 +87,10 @@ export default function MyRecord() {
           style={styles.item}
           onPress={() =>
             navigation.navigate("DetailRecord", {
-              // number:getNumber,
-              // name:getName
-              item, // truyền item qua luôn
+              item,   
             })
           }
         >
-          {/* onPress={() => { this.onPress(item) }}> */}
           <View style={styles.leftItem}>
             <Number number={item.number}></Number>
             <Name name={item.name}></Name>
