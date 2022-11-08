@@ -18,7 +18,7 @@ const TopProducts = ({navigation}) => {
   return (
     <ScrollView
       style={styles.container}
-      horizontal
+      horizontal={true}
       showsHorizontalScrollIndicator={false}>
       {PRODUCT_DATA.map((ele, index) => {
         return (

@@ -3,8 +3,8 @@ import { View, useWindowDimensions, Text} from 'react-native';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
  
 const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: 'grey'}}>
-  	<Text>Tab One</Text>
+  <View style={{ flex: 1, color: 'black'}}>
+
   </View>
 );
 const SecondRoute = () => (
@@ -18,8 +18,8 @@ export default function TabViewMenu() {
  
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-  { key: 'first', title: 'First' },
-  { key: 'second', title: 'Second' },
+  { key: 'first', title: 'Thông tin' },
+  { key: 'second', title: 'Nhận xét' },
   ]);
  
   const renderScene = SceneMap({
@@ -30,9 +30,9 @@ export default function TabViewMenu() {
   const renderTabBar = props => (
   	<TabBar
      	 {...props}
-      	activeColor={'white'}
+      	activeColor={'grey'}
       	inactiveColor={'black'}
-          style={{marginTop:25,backgroundColor:'red'}}
+          style={{marginTop:25,backgroundColor:'white'}}
   	/>
   );
  

@@ -1,18 +1,20 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
- 
-import {useEffect} from 'react';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+
+import { useEffect } from 'react';
 // import TabViewMenu from './TabView';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-const DetailProduct = ({route, navigator}) => {
+import { Feather } from '@expo/vector-icons';
+import TabViewExample from './TapViewEx';
+const DetailProduct = ({ route, navigator }) => {
   const user = route.params.user;
-   
-  const navigation = useNavigation(); 
+
+  const navigation = useNavigation();
   return (
     <ScrollView style={styles.container}>
-      <Text style={{fontWeight: '900', fontSize: 22, color: '#090F47'}}>
+      <Text style={{ fontWeight: '900', fontSize: 22, color: '#090F47' }}>
         Chi tiết xe{' '}
       </Text>
       <Text style={styles.captionTitle}> {user.title}</Text>
@@ -32,14 +34,22 @@ const DetailProduct = ({route, navigator}) => {
             Honda SH 2022
           </Text>
           <Text style={styles.addTitle}>
-            Xe máy thông minh - Số tự động - Xăng - Giao xe tận nơi{' '}
+            Xe máy thông minh - Số tự động - Giao xe tận nơi{' '}
           </Text>
         </View>
-        <TouchableOpacity onPress={ ()=>{
-              navigation.navigate('map',{user:user})
-          } } > 
-          <Text>xem địa chỉ</Text>
+
+      </View>
+      <View style={styles.mapicon}>
+        <View style={styles.mapele}>
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('map', { user: user })
+          }} >
+            <Feather name="map-pin" size={24} color="black" />
           </TouchableOpacity>
+        </View>
+        <View>
+          <Text>Địa chỉ </Text>
+        </View>
       </View>
       <View style={styles.productPackage}>
         <Text style={styles.titlePackage}>Phương thức liên hệ</Text>
@@ -48,22 +58,21 @@ const DetailProduct = ({route, navigator}) => {
             <Text style={styles.titleA}>Nhắn tin</Text>
           </View>
           <View style={styles.priceAva}>
-            <Text style={styles.title}>Gọi điện miễn phí</Text>
+            <Text style={styles.titleB}>Gọi điện miễn phí</Text>
           </View>
           <View style={styles.priceAva}>
-            <Text style={styles.title}>Gọi điện qua số</Text>
+            <Text style={styles.titleB}>Gọi điện qua số</Text>
           </View>
         </View>
       </View>
       <View>
-        {/* <TabViewMenu/> */}
+      <TabViewExample/>
       </View>
     </ScrollView>
   );
 };
 const styles = StyleSheet.create({
   container: {
-   
     marginHorizontal: 15,
   },
   pageTitle: {
@@ -89,6 +98,13 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+  mapicon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   introDetail: {
     flexDirection: 'row',
@@ -99,20 +115,24 @@ const styles = StyleSheet.create({
     color: '#090F47',
   },
   productPackage: {
-    marginTop: 30,
+    marginTop: 20,
   },
   pricingModel: {
     marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    height: 30,
+    height: 27,
+    width: 330,
+
   },
-  // title: {
-  //   fontSize: '12px',
-  //   color: '#3399FF',
-  // },
+  titleB: {
+    fontSize: 11,
+    color: '#3399FF',
+  },
+
   titleA: {
     color: 'white',
+    fontSize: 11,
   },
 
   titlePackage: {
@@ -120,10 +140,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 10,
   },
-  // titleFi: {
-  //   fontsize: 12,
-  //   color: '#FFA41B',
-  // },
   priceAva: {
     paddingHorizontal: 15,
     paddingVertical: 5,

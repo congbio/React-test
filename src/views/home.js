@@ -3,9 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as React from 'react';
 import BottomBar from '../components/bottomBar';
 import Homepage from '../components/Homepage';
-// import HomeSlide from '../components/homeSlider';
 
-export default function Home({ navigation, route }) {
+export default function Home( ) {
   return (
     <View style={styles.container}>
        <Homepage/>
@@ -17,6 +16,5 @@ export default function Home({ navigation, route }) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-     
     },
   });

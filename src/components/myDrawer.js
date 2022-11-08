@@ -8,7 +8,7 @@ import { MaterialIcons } from "@expo/vector-icons";
  
 import { Image, Text, View } from 'react-native';
 
-// import Home from "./home";
+ 
 import EmployeeBenefits from "../views/employeeBenefits";
 import MyRequistion from "../views/myRequistion";
 import Map from "../views/Map";

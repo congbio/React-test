@@ -1,14 +1,18 @@
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Banner from './Banner';
 import TopProducts from './TopProducts';
 import AllProducts from './AllProducts';
 import { useNavigation } from '@react-navigation/native';
+import { LogBox } from 'react-native';
+
 const Homepage = (  ) => {
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+}, [])
   const navigation = useNavigation(); 
-  console.log('kddddđ',navigation);
   return (
-    <ScrollView style={styles.container} showsHorizontalScrollIndicator={false}>
+    <ScrollView style={styles.container}  showsHorizontalScrollIndicator ={false}>
       <View style={styles.banner}>
         <Banner />
       </View>
