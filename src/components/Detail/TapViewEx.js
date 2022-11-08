@@ -3,7 +3,7 @@ import { View, useWindowDimensions, Text} from 'react-native';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
  
 const FirstRoute = () => (
-  <View style={{ flex: 1, color: 'black'}}>
+  <View style={{ flex: 1,  color: 'black'}}>
 
   </View>
 );

@@ -23,6 +23,7 @@ export default function Map({route,navigator}) {
   // const locationofaddress = route.params.user;
 
   const [visibleCarousel, setVisibleCarousel] = useState(false)
+  const [activeSlide,setActiveSlide]=useState(1)
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
@@ -45,8 +46,6 @@ export default function Map({route,navigator}) {
  
    
  
-  
-
 
   const getCurrentLocation = async () => {
     try {
@@ -62,8 +61,17 @@ export default function Map({route,navigator}) {
   }
 
   const renderItem = ({ item, index }) => {
+    console.log("thông tin ve xe này",item);
     return (
-      <TouchableOpacity style={{ marginHorizontal: 20, height: 400, display: 'flex', backgroundColor: 'red' }}>
+      
+      <TouchableOpacity style={{ marginHorizontal: 20, height: 400, display: 'flex', backgroundColor: 'red' }}
+      onPress={() =>setLocation({
+        ...location,
+        latitude: item.location.latitude,
+        longitude: item.location.longitude
+      })}
+
+      >
         {/* <Image source={item.img} /> */}
         <Image source={item.img} style={{ height: 100, width: 150 }} />
         <Text>{item.title}</Text>
@@ -77,13 +85,13 @@ export default function Map({route,navigator}) {
       <MapView region={location} showsUserLocation style={styles.map} 
       zoomEnabled={true} 
       zoomControlEnabled={true}>
-          {PRODUCT_DATA.map(marker => (
+          {PRODUCT_DATA.map((marker,index) => (
           <Marker
             coordinate={marker.location}
             title={marker.owner}
             description={marker.desc}
             key={marker.id}
-            onPress={() => setVisibleCarousel(true)}
+            onPress={() => {setVisibleCarousel(true); setActiveSlide(index)}}
 
           >
 
@@ -105,6 +113,8 @@ export default function Map({route,navigator}) {
           itemWidth={SCREEN_WIDTH - 10}
           itemHeight={200}
           layout="default"
+          firstItem={activeSlide}
+          onSnapToItem={(index) => setActiveSlide(index)}
           inactiveSlideOpacity={1}
           inactiveSlideScale={1}
           onEndReachedThreshold={1}
