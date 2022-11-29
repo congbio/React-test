@@ -1,16 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet,Text, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, Button } from 'react-native';
 import * as React from 'react';
 import { GeoCoordinates } from 'react-native-geolocation-service';
 import BottomBar from '../components/bottomBar';
 import Geolocation from 'react-native-geolocation-service';
 import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import * as Location from "expo-location";
 import MapView, { Marker } from 'react-native-maps';
 import Search from './Search';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Carousel from 'react-native-snap-carousel';
 import { PRODUCT_DATA } from '../data/productData';
+import axios from 'axios';
+
+
+const api = 'https://6290540a27f4ba1c65b73fb1.mockapi.io/ReactNative';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -19,33 +24,47 @@ const ZOOMVALUE = 0.005;
 const ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT;
 const LATITUDE_DELTA = ZOOMVALUE;
 const LONGITUDE_DELTA = ZOOMVALUE * ASPECT_RATIO;
-export default function Map({route,navigator}) {
+export default function Map({ route, navigator }) {
+  const navigation = useNavigation(); 
   // const locationofaddress = route.params.user;
 
   const [visibleCarousel, setVisibleCarousel] = useState(false)
-  const [activeSlide,setActiveSlide]=useState(1)
+  const [activeSlide, setActiveSlide] = useState(1)
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: LONGITUDE_DELTA,
   })
-  
-      useEffect(() => {
-          const fetchData = async () => {
-            const position = await getCurrentLocation();
-            setLocation({
-              ...location,
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            })
-            console.log(position.coords)
-          }
-          fetchData()
-        }, []);
- 
-   
- 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const position = await getCurrentLocation();
+      setLocation({
+        ...location,
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      })
+
+    }
+    fetchData()
+  }, []);
+
+
+  const [dataLocation,setDataLocation]=useState([])
+
+  const getapi =()=>{
+      
+      axios.get(api).then((response) => {
+          setDataLocation(response.data);
+        
+      });
+     
+  }
+  useEffect(() => { getapi() }, []);
+  console.log(dataLocation);
+
+
 
   const getCurrentLocation = async () => {
     try {
@@ -61,51 +80,61 @@ export default function Map({route,navigator}) {
   }
 
   const renderItem = ({ item, index }) => {
-    console.log("thông tin ve xe này",item);
+
     return (
-      
+
       <TouchableOpacity style={{ marginHorizontal: 20, height: 400, display: 'flex', backgroundColor: 'red' }}
-      onPress={() =>setLocation({
-        ...location,
-        latitude: item.location.latitude,
-        longitude: item.location.longitude
-      })}
+        onPress={() => setLocation({
+          ...location,
+          latitude: item.latitude,
+          longitude: item.longitude
+        })}
 
       >
         {/* <Image source={item.img} /> */}
-        <Image source={item.img} style={{ height: 100, width: 150 }} />
+        <Image source={{ uri: `${item.img}`}} style={{ height: 100, width: 150 }} />
         <Text>{item.title}</Text>
-
+        <Button
+          onPress={ ()=>{
+            navigation.navigate('DetailProduct',{motobike:item})
+        } } 
+          title="View"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
       </TouchableOpacity>
     );
   };
   return (
     <View style={styles.container}>
       <Search />
-      <MapView region={location} showsUserLocation style={styles.map} 
-      zoomEnabled={true} 
-      zoomControlEnabled={true}>
-          {PRODUCT_DATA.map((marker,index) => (
+      <MapView region={location} showsUserLocation style={styles.map}
+        zoomEnabled={true}
+        zoomControlEnabled={true}>
+        {
+        // !dataLocation ? <View>loading</View> :
+        dataLocation.map((marker, index) => (
           <Marker
-            coordinate={marker.location}
+            coordinate={{latitude:marker.latitude,longitude:marker.longitude}}
             title={marker.owner}
             description={marker.desc}
             key={marker.id}
-            onPress={() => {setVisibleCarousel(true); setActiveSlide(index)}}
+            onPress={() => { setVisibleCarousel(true); setActiveSlide(index) }}
 
           >
 
             <View >
-              <Image style={{ height: 40, width: 40 }} source={marker.img} />
+              <Image style={{ height: 40, width: 40 }} source={{uri:`${marker.img}`}} />
             </View>
           </Marker>
-        ))}
-         
+        ))
+        }
+
       </MapView>
       {visibleCarousel && <View style={{ position: 'absolute', bottom: 60, marginBottom: 20, height: 150 }}>
         <Carousel
           // ref={carouselRef}
-          data={PRODUCT_DATA}
+          data={dataLocation}
           renderItem={
             renderItem
           }
