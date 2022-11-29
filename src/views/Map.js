@@ -26,7 +26,9 @@ const LATITUDE_DELTA = ZOOMVALUE;
 const LONGITUDE_DELTA = ZOOMVALUE * ASPECT_RATIO;
 export default function Map({ route, navigator }) {
   const navigation = useNavigation(); 
-  // const locationofaddress = route.params.user;
+  // const locationofaddress = route.params==null ?  null: route.prams;
+  // console.log("fdfdfdfdfdfdddddddddddddddddđ",locationofaddress);
+  
 
   const [visibleCarousel, setVisibleCarousel] = useState(false)
   const [activeSlide, setActiveSlide] = useState(1)
@@ -62,7 +64,7 @@ export default function Map({ route, navigator }) {
      
   }
   useEffect(() => { getapi() }, []);
-  console.log(dataLocation);
+  
 
 
 
@@ -111,9 +113,26 @@ export default function Map({ route, navigator }) {
       <MapView region={location} showsUserLocation style={styles.map}
         zoomEnabled={true}
         zoomControlEnabled={true}>
-        {
-        // !dataLocation ? <View>loading</View> :
-        dataLocation.map((marker, index) => (
+         
+        { 
+      //   locationofaddress==null?
+      //   <Marker
+      //   coordinate={{latitude:locationofaddress.params.motobike.latitude,longitude:locationofaddress.params.motobike.longitude}}
+      //   title={locationofaddress.params.motobike.owner}
+      //   description={locationofaddress.params.motobike.desc}
+      //   key={locationofaddress.params.motobike.id}
+      //   onPress={() => { setVisibleCarousel(true); setActiveSlide(index) }}
+
+      // >
+
+      //   <View >
+      //     <Image style={{ height: 40, width: 40 }} source={{uri:`${marker.img}`}} />
+      //   </View>
+      // </Marker>
+
+      //   // !dataLocation ? <View>loading</View> :
+      //  : 
+      dataLocation.map((marker, index) => (
           <Marker
             coordinate={{latitude:marker.latitude,longitude:marker.longitude}}
             title={marker.owner}
