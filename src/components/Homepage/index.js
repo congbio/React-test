@@ -5,6 +5,7 @@ import TopProducts from './TopProducts';
 import AllProducts from './AllProducts';
 import { useNavigation } from '@react-navigation/native';
 import { LogBox } from 'react-native';
+ 
 
 const Homepage = (  ) => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const Homepage = (  ) => {
   const navigation = useNavigation(); 
   return (
     <ScrollView style={styles.container}  showsHorizontalScrollIndicator ={false}>
+     
       <View style={styles.banner}>
         <Banner />
       </View>
@@ -28,6 +30,11 @@ const Homepage = (  ) => {
       <View style={styles.all_product}>
        <AllProducts navigation={navigation}/>
       </View>
+      <View>
+ 
+
+      </View>
+
     </ScrollView>
   );
 };

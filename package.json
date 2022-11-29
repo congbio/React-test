@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.2.5",
     "@turf/destination": "^6.5.0",
     "@turf/helpers": "^6.5.0",
+    "axios": "^1.2.0",
     "expo": "~44.0.0",
     "expo-location": "~14.0.1",
     "expo-status-bar": "~1.2.0",

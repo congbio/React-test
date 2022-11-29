@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import TabViewExample from './TapViewEx';
 const DetailProduct = ({ route, navigator }) => {
-  const user = route.params.user;
+  const motobike = route.params.motobike;
 
   const navigation = useNavigation();
   return (
@@ -17,9 +17,9 @@ const DetailProduct = ({ route, navigator }) => {
       <Text style={{ fontWeight: '900', fontSize: 22, color: '#090F47' }}>
         Chi tiết xe{' '}
       </Text>
-      <Text style={styles.captionTitle}> {user.title}</Text>
+      <Text style={styles.captionTitle}> {motobike.title}</Text>
       <View style={styles.logo}>
-        <Image style={styles.slideImage} source={user.img} />
+        <Image style={styles.slideImage} source={{ uri:`${motobike.img}`}} />
       </View>
       <View style={styles.introDetail}>
         <View>
@@ -42,7 +42,7 @@ const DetailProduct = ({ route, navigator }) => {
       <View style={styles.mapicon}>
         <View style={styles.mapele}>
           <TouchableOpacity onPress={() => {
-            navigation.navigate('map', { user: user })
+            navigation.navigate('map', { motobike: motobike })
           }} >
             <Feather name="map-pin" size={24} color="black" />
           </TouchableOpacity>

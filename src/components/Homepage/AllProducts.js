@@ -8,13 +8,32 @@ import {
   Dimensions,
   Button,
 } from 'react-native';
-import React from 'react';
-import { PRODUCT_DATA } from '../../data/productData';
+ 
+import React, { useState,useEffect } from 'react';
+import axios from 'axios';
+ 
 import { TouchableOpacity } from 'react-native-gesture-handler';
  
 
+const api = 'https://6290540a27f4ba1c65b73fb1.mockapi.io/ReactNative';
+
+ 
+ 
+ 
+
 const AllProducts = ({navigation}) => {
-  
+  const [dataLocation,setDataLocation]=useState([])
+
+    const getapi =()=>{
+        
+        axios.get(api).then((response) => {
+            setDataLocation(response.data);
+          
+        });
+       
+    }
+    useEffect(() => { getapi() }, []);
+
   
   const windowWidth = Dimensions.get('window').width;
   const renderItem = ({item}) => (
@@ -25,11 +44,11 @@ const AllProducts = ({navigation}) => {
         },
       ]}   
     onPress={ ()=>{
-      navigation.navigate('DetailProduct',{user:item})
+      navigation.navigate('DetailProduct',{motobike:item})
   } } 
   key={item.id} style={styles.item}
     >
-      <Image style={styles.picture} source={item.img} />
+      <Image style={styles.picture} source={{uri: `${item.img}`}} />
       <View style={styles.packet}>
         <View>
           <Text style={styles.title}>{item.title}</Text>
@@ -51,7 +70,7 @@ const AllProducts = ({navigation}) => {
           showsVerticalScrollIndicator={false}
           
           columnWrapperStyle={{justifyContent: 'space-between'}}
-          data={PRODUCT_DATA}
+          data={dataLocation}
           numColumns={2}
           renderItem={renderItem}
           keyExtractor={item => item.id}
